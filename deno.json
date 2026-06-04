@@ -2,7 +2,9 @@
   "tasks": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "preview": "vite preview --host 0.0.0.0"
+    "preview": "vite preview --host 0.0.0.0",
+    "deploy:create": "deno deploy create --source local --runtime-mode static --static-dir dist --single-page-app --build-command \"deno task build\" --build-timeout 10 --build-memory-limit 2048 --region global",
+    "deploy": "deno deploy --prod"
   },
   "nodeModulesDir": "auto",
   "imports": {
