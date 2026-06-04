@@ -1,0 +1,16 @@
+{
+  "tasks": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "nodeModulesDir": "auto",
+  "imports": {
+    "@sveltejs/vite-plugin-svelte": "npm:@sveltejs/vite-plugin-svelte@5.1.1",
+    "vite": "npm:vite@6.3.6",
+    "svelte": "npm:svelte@5.56.1"
+  },
+  "compilerOptions": {
+    "types": ["vite/client"]
+  }
+}
