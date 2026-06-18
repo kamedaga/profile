@@ -59,7 +59,7 @@
       <div class="intro">
         <p class="eyebrow">PROFILE</p>
         <h1>{name}</h1>
-        <p class="lead">プログラミング始めました</p>
+        <p class="lead">プログラミング, いろいろ</p>
         <div class="actions" aria-label="リンク">
           <a class="primary" href="https://github.com/kamedaga" target="_blank" rel="noreferrer">GitHub</a>
           <a class="secondary" href="https://zenn.dev/kamerty">Zenn</a>
