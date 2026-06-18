@@ -1,184 +1,235 @@
 <script lang="ts">
   import wf201Character from "./assets/wf201Character.png";
+  import { onMount } from 'svelte';
 
   const name = "Kamezuki";
+  let activeSection = 'profile';
+
+  onMount(() => {
+    const sectionIds = ['profile', 'nilo', 'pine-online', 'pachaos', 'kobox', 'tools'];
+
+    const update = () => {
+      const scrollY = window.scrollY;
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop - window.innerHeight * 0.4 <= scrollY) {
+          activeSection = sectionIds[i];
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+    return () => window.removeEventListener('scroll', update);
+  });
 </script>
 
-<main class="page">
-  <section class="hero-card" aria-label="プロフィール">
-    <div class="intro">
-      <p class="eyebrow">PROFILE</p>
-      <h1>{name}</h1>
-      <p class="lead">プログラミング始めました</p>
-      <div class="actions" aria-label="リンク">
-        <a class="primary" href="https://github.com/kamedaga" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="secondary" href="https://zenn.dev/kamerty">Zenn</a>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-brand">
+        <span class="brand-mark">Kame</span>
+        <span class="brand-name">KAMEZUKI</span>
       </div>
-      <div class="small">(ぜひフォローよろしくお願いします。)</div>
-    </div>
 
-    <div class="note-stack" aria-hidden="true">
-      <div class="note note-lime">Zsh</div>
-      <div class="note note-pink">Bash</div>
-      <div class="note note-lilac">C</div>
-    </div>
-  </section>
+      <nav class="sidebar-nav" aria-label="セクション">
+        <a href="#profile" class:active={activeSection === 'profile'}><span class="nav-num">01</span>Profile</a>
+        <a href="#nilo" class:active={activeSection === 'nilo'}><span class="nav-num">02</span>nilo</a>
+        <a href="#pine-online" class:active={activeSection === 'pine-online'}><span class="nav-num">03</span>pine-online</a>
+        <a href="#pachaos" class:active={activeSection === 'pachaos'}><span class="nav-num">04</span>PachaOS</a>
+        <a href="#kobox" class:active={activeSection === 'kobox'}><span class="nav-num">05</span>kobox</a>
+        <a href="#tools" class:active={activeSection === 'tools'}><span class="nav-num">06</span>Tools</a>
+      </nav>
 
-  <section class="project-card" aria-labelledby="project-nilo">
-    <div class="project-copy">
-      <p class="eyebrow">WORK 01</p>
-      <h2 id="project-nilo">nilo</h2>
-      <p class="project-kind">UI framework</p>
-      <p class="project-description">
-        宣言的DSLでUIを設計できるUIフレームワーク。
-      </p>
-      <a
-        class="primary"
-        href="https://github.com/kamedaga/nilo"
-        target="_blank"
-        rel="noreferrer"
-      >
-        GitHub
-      </a>
-    </div>
-
-    <div class="dsl-preview" aria-label="nilo DSL preview">
-      <span>timeline Calc &#123;</span>
-      <span class="indent">font: "japanese"</span>
-      <span class="indent">VStack(style: &#123;</span>
-      <span class="indent-2">width: 100ww,</span>
-      <span class="indent-2">height: 100wh,</span>
-      <span class="indent-2">...</span>
-      <span class="indent">&#125;</span>
-      <span>&#125;</span>
-    </div>
-  </section>
-
-  <section class="project-card project-card-pine" aria-labelledby="project-pine-online">
-    <div class="project-copy">
-      <p class="eyebrow">WORK 02</p>
-      <h2 id="project-pine-online">pine-online</h2>
-      <p class="project-kind">microservices experiment</p>
-      <p class="project-description">
-        興味でAIに複数の言語を使ってマイクロサービスを作らせるも、どこにもデプロイできず自宅鯖で運営していたが結局終了したため供養。
-      </p>
-      <a
-        class="primary"
-        href="https://github.com/kamedaga/pine-online"
-        target="_blank"
-        rel="noreferrer"
-      >
-        GitHub
-      </a>
-    </div>
-
-    <div class="language-board" aria-label="pine-online language breakdown">
-      <div class="language-bar" aria-hidden="true">
-        <span class="lang-csharp"></span>
-        <span class="lang-typescript"></span>
-        <span class="lang-go"></span>
-        <span class="lang-css"></span>
-        <span class="lang-html"></span>
-        <span class="lang-scala"></span>
-        <span class="lang-other"></span>
-      </div>
-      <dl class="language-list">
-        <div><dt><span class="dot lang-csharp"></span>C#</dt><dd>36.1%</dd></div>
-        <div><dt><span class="dot lang-typescript"></span>TypeScript</dt><dd>31.0%</dd></div>
-        <div><dt><span class="dot lang-go"></span>Go</dt><dd>14.7%</dd></div>
-        <div><dt><span class="dot lang-css"></span>CSS</dt><dd>10.6%</dd></div>
-        <div><dt><span class="dot lang-html"></span>HTML</dt><dd>3.6%</dd></div>
-        <div><dt><span class="dot lang-scala"></span>Scala</dt><dd>1.9%</dd></div>
-        <div><dt><span class="dot lang-other"></span>Other</dt><dd>2.1%</dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <section class="project-card project-card-pacha" aria-labelledby="project-pachaos">
-    <div class="project-copy">
-      <p class="eyebrow">WORK 03</p>
-      <h2 id="project-pachaos">PachaOS</h2>
-      <p class="project-kind">microkernel OS</p>
-      <p class="project-description">
-        Linux互換を目指して作っているZig製マイクロカーネル。(ユーザー空間はほとんどC)<br />
-        Python、Vim、Clang、apk などをユーザーランドで動かす実験をしています。
-      </p>
-      <a
-        class="primary"
-        href="https://github.com/kamedaga/os"
-        target="_blank"
-        rel="noreferrer"
-      >
-        GitHub
-      </a>
-    </div>
-
-    <div class="terminal-board" aria-label="PachaOS terminal preview">
-      <span class="prompt"># python3</span>
-      <span>Python 3.12.13 on linux</span>
-      <span class="prompt">&gt;&gt;&gt; import os</span>
-      <span class="prompt">&gt;&gt;&gt; os.uname()</span>
-      <span>sysname='Linux'</span>
-      <span>release='6.0.0-capabilityos'</span>
-      <span class="prompt"># apk add nano clang</span>
-      <span>OK: userland-first</span>
-    </div>
-  </section>
-
-  <section class="project-card project-card-kobox" aria-labelledby="project-kobox">
-    <div class="project-copy">
-      <p class="eyebrow">WORK 04</p>
-      <h2 id="project-kobox">kobox</h2>
-      <p class="project-kind">driver runtime</p>
-      <p class="project-description">
-        Linux カーネルドライバをユーザーランドで動かすランタイム。<br />
-        NVMe や USB Storage を Linux VFIO / PachaOS Capsule backend で動かしています。
-      </p>
-      <a
-        class="primary"
-        href="https://github.com/kamedaga/kobox"
-        target="_blank"
-        rel="noreferrer"
-      >
-        GitHub
-      </a>
-    </div>
-
-    <div class="flow-board" aria-label="kobox driver flow">
-      <div class="flow-node">Linux Driver<br />.ko</div>
-      <div class="flow-arrow">↓</div>
-      <div class="flow-node">libc shim</div>
-      <div class="flow-arrow">↓</div>
-      <div class="flow-node">backend API</div>
-      <div class="flow-arrow">↓</div>
-      <div class="flow-node flow-device">NVMe / USB</div>
-    </div>
-  </section>
-
-  <section class="tech-section" aria-labelledby="tech-title">
-    <div class="tech-copy">
-      <p class="eyebrow">TOOLS</p>
-      <h2 id="tech-title">使ってる技術</h2>
-      <p class="tech-lead">
-        いろいろできます。
-      </p>
-      <div class="tech-grid" aria-label="技術一覧">
-        <span>Zig</span>
-        <span>C</span>
-        <span>Go</span>
+      <div class="sidebar-footer">
+        <div class="sidebar-divider"></div>
+        <a class="sidebar-ext" href="https://github.com/kamedaga" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <a class="sidebar-ext" href="https://zenn.dev/kamerty">Zenn <span aria-hidden="true">↗</span></a>
+        <div class="sidebar-divider"></div>
+        <div class="sidebar-tags">
+          <span>Zsh</span><span>Bash</span><span>C</span>
+        </div>
       </div>
     </div>
+  </aside>
 
-    <img
-      class="tech-character"
-      src={wf201Character}
-      alt=""
-      aria-hidden="true"
-      loading="lazy"
-      decoding="async"
-    />
-  </section>
-</main>
+  <main class="page">
+    <section id="profile" class="hero-card" aria-label="プロフィール">
+      <div class="intro">
+        <p class="eyebrow">PROFILE</p>
+        <h1>{name}</h1>
+        <p class="lead">プログラミング始めました</p>
+        <div class="actions" aria-label="リンク">
+          <a class="primary" href="https://github.com/kamedaga" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="secondary" href="https://zenn.dev/kamerty">Zenn</a>
+        </div>
+        <div class="small">(ぜひフォローよろしくお願いします。)</div>
+      </div>
+
+      <div class="note-stack" aria-hidden="true">
+        <div class="note note-lime">Zsh</div>
+        <div class="note note-pink">Bash</div>
+        <div class="note note-lilac">C</div>
+      </div>
+    </section>
+
+    <section id="nilo" class="project-card" aria-labelledby="project-nilo">
+      <div class="project-copy">
+        <p class="eyebrow">WORK 01</p>
+        <h2 id="project-nilo">nilo</h2>
+        <p class="project-kind">UI framework</p>
+        <p class="project-description">
+          宣言的DSLでUIを設計できるUIフレームワーク。
+        </p>
+        <a
+          class="primary"
+          href="https://github.com/kamedaga/nilo"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+
+      <div class="dsl-preview" aria-label="nilo DSL preview">
+        <span>timeline Calc &#123;</span>
+        <span class="indent">font: "japanese"</span>
+        <span class="indent">VStack(style: &#123;</span>
+        <span class="indent-2">width: 100ww,</span>
+        <span class="indent-2">height: 100wh,</span>
+        <span class="indent-2">...</span>
+        <span class="indent">&#125;</span>
+        <span>&#125;</span>
+      </div>
+    </section>
+
+    <section id="pine-online" class="project-card project-card-pine" aria-labelledby="project-pine-online">
+      <div class="project-copy">
+        <p class="eyebrow">WORK 02</p>
+        <h2 id="project-pine-online">pine-online</h2>
+        <p class="project-kind">microservices experiment</p>
+        <p class="project-description">
+          興味でAIに複数の言語を使ってマイクロサービスを作らせるも、どこにもデプロイできず自宅鯖で運営していたが結局終了したため供養。
+        </p>
+        <a
+          class="primary"
+          href="https://github.com/kamedaga/pine-online"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+
+      <div class="language-board" aria-label="pine-online language breakdown">
+        <div class="language-bar" aria-hidden="true">
+          <span class="lang-csharp"></span>
+          <span class="lang-typescript"></span>
+          <span class="lang-go"></span>
+          <span class="lang-css"></span>
+          <span class="lang-html"></span>
+          <span class="lang-scala"></span>
+          <span class="lang-other"></span>
+        </div>
+        <dl class="language-list">
+          <div><dt><span class="dot lang-csharp"></span>C#</dt><dd>36.1%</dd></div>
+          <div><dt><span class="dot lang-typescript"></span>TypeScript</dt><dd>31.0%</dd></div>
+          <div><dt><span class="dot lang-go"></span>Go</dt><dd>14.7%</dd></div>
+          <div><dt><span class="dot lang-css"></span>CSS</dt><dd>10.6%</dd></div>
+          <div><dt><span class="dot lang-html"></span>HTML</dt><dd>3.6%</dd></div>
+          <div><dt><span class="dot lang-scala"></span>Scala</dt><dd>1.9%</dd></div>
+          <div><dt><span class="dot lang-other"></span>Other</dt><dd>2.1%</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section id="pachaos" class="project-card project-card-pacha" aria-labelledby="project-pachaos">
+      <div class="project-copy">
+        <p class="eyebrow">WORK 03</p>
+        <h2 id="project-pachaos">PachaOS</h2>
+        <p class="project-kind">microkernel OS</p>
+        <p class="project-description">
+          Linux互換を目指して作っているZig製マイクロカーネル。(ユーザー空間はほとんどC)<br />
+          Python、Vim、Clang、apk などをユーザーランドで動かす実験をしています。
+        </p>
+        <a
+          class="primary"
+          href="https://github.com/kamedaga/os"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+
+      <div class="terminal-board" aria-label="PachaOS terminal preview">
+        <span class="prompt"># python3</span>
+        <span>Python 3.12.13 on linux</span>
+        <span class="prompt">&gt;&gt;&gt; import os</span>
+        <span class="prompt">&gt;&gt;&gt; os.uname()</span>
+        <span>sysname='Linux'</span>
+        <span>release='6.0.0-capabilityos'</span>
+        <span class="prompt"># apk add nano clang</span>
+        <span>OK: userland-first</span>
+      </div>
+    </section>
+
+    <section id="kobox" class="project-card project-card-kobox" aria-labelledby="project-kobox">
+      <div class="project-copy">
+        <p class="eyebrow">WORK 04</p>
+        <h2 id="project-kobox">kobox</h2>
+        <p class="project-kind">driver runtime</p>
+        <p class="project-description">
+          Linux カーネルモジュールをユーザーランドで動かすランタイム。<br />
+          NVMe や USB Storage を Linux VFIO / PachaOS Capsule backend で動かしています。
+        </p>
+        <a
+          class="primary"
+          href="https://github.com/kamedaga/kobox"
+          target="_blank"
+          rel="noreferrer"
+        >
+          GitHub
+        </a>
+      </div>
+
+      <div class="flow-board" aria-label="kobox driver flow">
+        <div class="flow-node">Linux Driver<br />.ko</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node">libc shim</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node">backend API</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node flow-device">NVMe / USB</div>
+      </div>
+    </section>
+
+    <section id="tools" class="tech-section" aria-labelledby="tech-title">
+      <div class="tech-copy">
+        <p class="eyebrow">TOOLS</p>
+        <h2 id="tech-title">使ってる技術</h2>
+        <p class="tech-lead">
+          いろいろできます。
+        </p>
+        <div class="tech-grid" aria-label="技術一覧">
+          <span>Zig</span>
+          <span>C</span>
+          <span>Go</span>
+        </div>
+      </div>
+
+      <img
+        class="tech-character"
+        src={wf201Character}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+      />
+    </section>
+  </main>
+</div>
 
 <style>
   :global(*) {
@@ -193,9 +244,178 @@
     font-family:
       "Comic Sans MS", "Yu Gothic", "Hiragino Maru Gothic ProN", system-ui,
       sans-serif;
+    scroll-behavior: smooth;
   }
 
+  /* ── LAYOUT ── */
+  .layout {
+    display: flex;
+    min-height: 100svh;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100svh;
+    background: #0d0d0d;
+    color: #ffffff;
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: 32px 22px;
+  }
+
+  .sidebar-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 40px;
+  }
+
+  .brand-mark {
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: #444444;
+  }
+
+  .brand-name {
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #ffffff;
+    line-height: 1.3;
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-nav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: #777777;
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    min-height: unset;
+    justify-content: flex-start;
+    border: none;
+    background: none;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .sidebar-nav a:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .sidebar-nav a.active {
+    color: #ffffff;
+  }
+
+  .sidebar-nav a.active .nav-num {
+    color: #666666;
+  }
+
+  .sidebar-nav a.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2px;
+    height: 14px;
+    background: #ffffff;
+    border-radius: 1px;
+  }
+
+  .nav-num {
+    font-size: 0.65rem;
+    color: #3a3a3a;
+    flex: 0 0 auto;
+    letter-spacing: 0.05em;
+  }
+
+  .sidebar-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 20px;
+  }
+
+  .sidebar-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 6px 0;
+  }
+
+  .sidebar-ext {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 10px;
+    color: #555555;
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    min-height: unset;
+    border: none;
+    background: none;
+    border-radius: 4px;
+    transition: color 0.15s;
+  }
+
+  .sidebar-ext:hover {
+    color: #bbbbbb;
+  }
+
+  .sidebar-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 4px 10px;
+  }
+
+  .sidebar-tags span {
+    font-family: "Courier New", ui-monospace, monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #3a3a3a;
+    border: 1px solid #2a2a2a;
+    border-radius: 3px;
+    padding: 2px 6px;
+  }
+
+  /* ── MAIN CONTENT ── */
   .page {
+    margin-left: 220px;
+    flex: 1;
+    min-width: 0;
     min-height: 100svh;
     padding: 14px;
     display: flex;
@@ -741,6 +961,17 @@
 
   .prompt {
     color: #ffffff;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 900px) {
+    .sidebar {
+      display: none;
+    }
+
+    .page {
+      margin-left: 0;
+    }
   }
 
   @media (max-width: 820px) {
