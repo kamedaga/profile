@@ -1,0 +1,15 @@
+{
+  "name": "kamezukiprofile",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^5.1.1",
+    "svelte": "^5.56.1",
+    "vite": "^6.3.6"
+  }
+}
